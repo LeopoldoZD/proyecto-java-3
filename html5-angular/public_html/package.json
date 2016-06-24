@@ -1,0 +1,11 @@
+{
+    "name": "html5-angular",
+    "version": "1.0.0",
+    "keywords": ["util", "functional", "server", "client", "browser"],
+    "author": "campitos",
+    "contributors": [],
+    "dependencies": {
+        "bootstrap":"3.x.x",
+        "angular":"1.5.6"
+    }
+}
