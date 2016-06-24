@@ -9,8 +9,21 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="node_modules/angular/angular.js"></script>
+        <script>
+            angular.module("modulo1",[])
+                    .controller("Ctrl1",function($scope,$http){
+                        $scope.mensaje="Hola";
+                $http.get('http://localhost:9999/producto').success(function(json){
+                   $scope.mensaje= json.length;
+                });
+                        
+            })
+        </script>
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body ng-app="modulo1">
+        <div ng-controller="Ctrl1">
+        {{mensaje}}
+        </div>
     </body>
 </html>
