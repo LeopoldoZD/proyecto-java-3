@@ -10,20 +10,98 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="node_modules/angular/angular.js"></script>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
+        
         <script>
-            angular.module("modulo1",[])
-                    .controller("Ctrl1",function($scope,$http){
-                        $scope.mensaje="Hola";
-                $http.get('http://localhost:9999/producto').success(function(json){
-                   $scope.mensaje= json.length;
-                });
-                        
-            })
+         //primero generamos un modulo
+         angular.module("primero",[])
+                 .controller("productos",function ($scope,$http){
+                     //estamos adentro de productos
+             $scope.nombre;
+             $scope.precio;
+             $scope.id;
+             $scope.productos=[];
+             $http.get('http://localhost:9999/producto').success(function (json){
+                $scope.productos=json;
+             //la referencia $http sirve para comunicarnos con el servicio web por medio de su uri
+         });
+        
+ 
+    
+         //metodo para guardar
+         $scope.miNombre;
+         $scope.miPrecio;
+         $scope.guardar=function(){
+             $http.post('http://localhost:9999/producto/'+$scope.miNombre+'/'+$scope.miPrecio).success(function(datos){
+              $scope.estatusMensaje=datos;
+          })
+      }
+      })
+  
+      
+      .controller("usuarios",function ($scope,$http){
+               
+                 
+             
+              
+             }).controller("empleado",function ($scope,$http){
+                 
+                 //declaramos las variables que seran pasadas al servciio
+                 // id_departamento y nombre del empleado
+                 $scope.id_departamento;
+                 $scope.nombre;
+                 $scope.mensaje;
+                 //invocamos el servicio
+                 $scope.guardarempleado=function(){
+                     $http.post('http://localhost:9999/empleado/'+$scope.id_departamento+'/'+$scope.nombre).success(function (datos){
+                     $scope.mensaje=datos;
+                 
+                
+                    
+              
+             });
+         }
+     });
+               
         </script>
     </head>
-    <body ng-app="modulo1">
-        <div ng-controller="Ctrl1">
-        {{mensaje}}
+    <body ng-app="primero">
+        <div ng-controller="productos">
+    
+      
+        <input ng-model="id" type="text" placeholder="escribe el id">
+        <button ng-click="buscar()">buscar por id</button>
+        <br>
+        {{nombre}}<br>
+        {{precio}}<br>
+        <h2>Formulario para guardar un producto</h2>
+        <input type="text" ng-model="miNombre" placeholder="coloca el nombre">
+        <input type="text" ng-model="miPrecio"placeholder="coloca el precio">
+        <button ng-click="guardar()">Guardar producto</button>
+        <div>{{estatusMensaje}}</div>
+        
+        <h2>Buscar todos los registros</h2>
+        <table class="table table-bordered table-striped">
+            <tr class="success">    
+            <th>nombre del producto</th>
+            <th>precio del producto</th>
+            </tr> 
+            <tr ng-repeat="producto in productos">
+                <td>{{producto.nombre}}</td>
+                <td>{{producto.precio}}</td>
+                </tr>
+    </table>
+        
         </div>
+        <div ng-controller="empleado">
+            <input ng-model="id_departamento" type="text" placeholder="introdice el id depto">
+            <input type="text" ng-model="nombre" placeholder="NOMBRE DEL EMPLEADO">
+            <button ng-click="guardarempleado()">Guardar empleado</button>
+            <br>
+            <div>{{mensaje}}</div>
+        </div>
+        
     </body>
 </html>
+            
+ 
